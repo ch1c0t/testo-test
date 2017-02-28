@@ -18,15 +18,13 @@ def [] it
   uuid = SecureRandom.uuid
 
   pid = fork do
-    @it = it
-
     message = {
       pid: $$,
       uuid: uuid
     }
 
     begin
-      raise FailedAssertion unless instance_exec &@block
+      run it
       message[:ok] = true
     rescue Exception
       message[:exception] = $!
@@ -40,9 +38,15 @@ def [] it
   Report.new hash
 end
 
-def debug
+def run it
+  @it = it
+  raise FailedAssertion unless instance_exec &@block
+end
+
+def debug it
   require 'pry'
-  @block.binding.pry
+  binding.pry
+  run it
 end
 
 class FailedAssertion < StandardError
