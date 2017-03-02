@@ -1,26 +1,16 @@
-require 'securerandom'
-
-require 'tra/run'
-pattern = -> message do
-  message.is_a?(Hash) &&
-    [:pid, :uuid].all? { |key| message.key? key }
-end
-Tra.on pattern do |message|
-  Report[message[:uuid]] = message
-end
-
 def initialize &block
   @block = block
 end
 
 attr_reader :it
 def [] it
-  uuid = SecureRandom.uuid
+  reader, writer = IO.pipe
 
   pid = fork do
+    reader.close
+
     message = {
       pid: $$,
-      uuid: uuid
     }
 
     begin
@@ -30,12 +20,16 @@ def [] it
       message[:exception] = $!
       message[:ok] = false
     ensure
-      Process.ppid.put message
+      writer.write Marshal.dump message
+      writer.close
     end
   end
+  writer.close
 
-  hash = { test: self, uuid: uuid, pid: pid }
-  Report.new hash
+  message = Marshal.load reader.read
+  reader.close
+
+  Report.new self, message
 end
 
 def run it

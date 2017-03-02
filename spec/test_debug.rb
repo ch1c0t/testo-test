@@ -9,5 +9,4 @@ end
 
 it = 42
 report = test[it]
-sleep 0.01 until report.status == :failed
 report.debug it
