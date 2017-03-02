@@ -1,8 +1,9 @@
 require 'forwardable'
 
-attr_reader :test, :message
+attr_reader :test, :message, :exception
 def initialize test, message
   @test, @message = test, message
+  @exception = message[:exception]
 end
 
 def ok?

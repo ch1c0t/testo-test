@@ -7,6 +7,6 @@ describe Test do
 
     expect(passing.ok?).to eq true
     expect(failing.ok?).to eq false
-    expect(failing.message[:exception]).to be_a Testo::Test::FailedAssertion
+    expect(failing.exception).to be_a Testo::Test::FailedAssertion
   end
 end
