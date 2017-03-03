@@ -19,10 +19,8 @@ def [] it
 
     begin
       run it
-      message[:ok] = true
     rescue Exception
       message[:error] = $!
-      message[:ok] = false
     ensure
       writer.write Marshal.dump message
       writer.close
@@ -42,7 +40,6 @@ def [] it
     rescue Timeout::Error
       Process.kill :KILL, pid
       message[:error] = $!
-      message[:ok] = false
     end
   else
     child_message = Marshal.load reader.read

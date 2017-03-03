@@ -7,7 +7,7 @@ def initialize test, message
 end
 
 def ok?
-  message[:ok]
+  not message[:error]
 end
 
 extend Forwardable
