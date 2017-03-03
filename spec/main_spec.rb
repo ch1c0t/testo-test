@@ -7,7 +7,7 @@ describe Test do
 
     expect(passing.ok?).to eq true
     expect(failing.ok?).to eq false
-    expect(failing.exception).to be_a Testo::Test::FailedAssertion
+    expect(failing.error).to be_a Testo::Test::FailedAssertion
   end
 
   it do
@@ -21,6 +21,6 @@ describe Test do
     report = test[:anything]
 
     expect(report.ok?).to eq false
-    expect(report.exception).to be_a Timeout::Error
+    expect(report.error).to be_a Timeout::Error
   end
 end

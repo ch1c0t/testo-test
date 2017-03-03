@@ -21,7 +21,7 @@ def [] it
       run it
       message[:ok] = true
     rescue Exception
-      message[:exception] = $!
+      message[:error] = $!
       message[:ok] = false
     ensure
       writer.write Marshal.dump message
@@ -41,7 +41,7 @@ def [] it
       end
     rescue Timeout::Error
       Process.kill :KILL, pid
-      message[:exception] = $!
+      message[:error] = $!
       message[:ok] = false
     end
   else
