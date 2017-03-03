@@ -1,3 +1,9 @@
+require 'timeout'
+
+class << self
+  attr_accessor :timeout
+end
+
 def initialize &block
   @block = block
 end
@@ -9,9 +15,7 @@ def [] it
   pid = fork do
     reader.close
 
-    message = {
-      pid: $$,
-    }
+    message = {}
 
     begin
       run it
@@ -26,9 +30,26 @@ def [] it
   end
   writer.close
 
-  message = Marshal.load reader.read
+  message = {
+    pid: pid,
+  }
+  
+  if timeout = self.class.timeout
+    begin
+      child_message = Timeout.timeout timeout do
+        Marshal.load reader.read
+      end
+    rescue Timeout::Error
+      Process.kill :KILL, pid
+      message[:exception] = $!
+      message[:ok] = false
+    end
+  else
+    child_message = Marshal.load reader.read
+  end
   reader.close
 
+  message.merge! child_message if child_message
   Report.new self, message
 end
 

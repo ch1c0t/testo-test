@@ -9,4 +9,18 @@ describe Test do
     expect(failing.ok?).to eq false
     expect(failing.exception).to be_a Testo::Test::FailedAssertion
   end
+
+  it do
+    test = Test.new do
+      sleep 3
+      true
+    end
+
+    Test.timeout = 2
+
+    report = test[:anything]
+
+    expect(report.ok?).to eq false
+    expect(report.exception).to be_a Timeout::Error
+  end
 end
