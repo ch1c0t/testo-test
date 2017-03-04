@@ -29,6 +29,7 @@ def [] it
   writer.close
 
   message = {
+    it: it,
     pid: pid,
   }
   

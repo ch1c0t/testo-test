@@ -1,14 +1,13 @@
-require 'forwardable'
-
-attr_reader :test, :message, :error
+attr_reader :test, :message, :error, :it
 def initialize test, message
   @test, @message = test, message
-  @error = message[:error]
+  @error, @it = message[:error], message[:it]
 end
 
 def ok?
   not message[:error]
 end
 
-extend Forwardable
-def_delegator :test, :debug
+def debug
+  test.debug it
+end

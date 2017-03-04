@@ -9,4 +9,4 @@ end
 
 it = 42
 report = test[it]
-report.debug it
+report.debug
