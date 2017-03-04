@@ -1,11 +1,11 @@
-attr_reader :test, :message, :error, :it
+attr_reader :test, :error, :it
 def initialize test, message
-  @test, @message = test, message
+  @test = test
   @error, @it = message[:error], message[:it]
 end
 
 def ok?
-  not message[:error]
+  not error
 end
 
 def debug
