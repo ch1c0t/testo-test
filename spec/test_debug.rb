@@ -9,4 +9,7 @@ end
 
 it = 42
 report = test[it]
+
+require 'pry'
+binding.pry
 report.debug

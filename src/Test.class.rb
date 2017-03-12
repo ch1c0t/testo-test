@@ -56,10 +56,17 @@ def run it
   raise FailedAssertion unless instance_exec &@block
 end
 
+# Currently, this method is expected to be run from a Pry session only.
 def debug it
-  require 'pry'
-  binding.pry
-  run it
+  PryByebug::BreakCommand.new.send :add_breakpoint, "Testo::Test#run", nil
+  # How to "next next step" automatically when the breakpoint is hit?
+
+  begin
+    run it
+    raise "Cannot reproduce. It might be a heisebug."
+  rescue
+    $!
+  end
 end
 
 class FailedAssertion < StandardError
