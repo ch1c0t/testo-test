@@ -12,11 +12,9 @@ describe Test do
 
   it do
     test = Test.new do
-      sleep 3
+      sleep 6
       true
     end
-
-    Test.timeout = 2
 
     report = test[:anything]
 
