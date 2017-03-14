@@ -50,7 +50,7 @@ private
   end
 
   # The timeout has to be enforced from the parent, because some code
-  # may cause MRI to became unresponsive indefinetely.
+  # may cause MRI to become unresponsive indefinetely.
   # https://github.com/mbj/mutant#the-crash--stuck-problem-mri
   def in_isolation &block
     reader, writer = IO.pipe
