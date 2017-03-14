@@ -8,7 +8,7 @@ end
 
 attr_reader :it
 def [] it
-  child_message = in_isolation do
+  message = { it: it }.merge in_isolation {
     message = { pid: Process.pid }
 
     begin
@@ -18,11 +18,7 @@ def [] it
     end
 
     message
-  end
-
-  message = {
-    it: it,
-  }.merge child_message
+  }
   
   Report.new self, message
 end
