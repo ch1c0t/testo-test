@@ -69,5 +69,5 @@ private
     rescue Timeout::Error
       Process.kill :KILL, pid
       { pid: pid, error: $! }
-    end.tap { Process.wait pid }
+    end.tap { reader.close; Process.wait pid }
   end
