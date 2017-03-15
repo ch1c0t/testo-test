@@ -1,7 +1,6 @@
 attr_reader :test, :error, :it
-def initialize test, message
-  @test = test
-  @error, @it = message[:error], message[:it]
+def initialize message
+  @test, @error, @it = message.values_at :test, :error, :it
 end
 
 def ok?

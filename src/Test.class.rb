@@ -8,7 +8,7 @@ end
 
 attr_reader :it
 def [] it
-  message = { it: it }.merge in_isolation {
+  message = { test: self, it: it }.merge in_isolation {
     message = { pid: Process.pid }
 
     begin
@@ -20,7 +20,7 @@ def [] it
     message
   }
   
-  Report.new self, message
+  Report.new message
 end
 
 # Currently, this method is expected to be run from a Pry session only.
