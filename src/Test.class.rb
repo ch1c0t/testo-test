@@ -1,3 +1,5 @@
+require 'method_source'
+require 'forwardable'
 require 'timeout'
 
 TIMEOUT = 5
@@ -5,6 +7,9 @@ TIMEOUT = 5
 def initialize &block
   @block = block
 end
+
+extend Forwardable
+def_delegator :@block, :source
 
 attr_reader :it
 def [] it

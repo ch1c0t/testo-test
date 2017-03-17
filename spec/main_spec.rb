@@ -21,4 +21,14 @@ describe Test do
     expect(report.ok?).to eq false
     expect(report.error).to be_a Timeout::Error
   end
+
+  it do
+    test = Test.new do
+      it == 42
+    end
+
+    source = "    test = Test.new do\n      it == 42\n    end\n"
+
+    expect(test.source).to eq source
+  end
 end
