@@ -1,1 +1,0 @@
-bundle exec bgem output:lib/testo/test.rb scope:"['module Testo']"
