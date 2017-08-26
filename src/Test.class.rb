@@ -12,7 +12,7 @@ extend Forwardable
 def_delegator :@block, :source
 
 attr_reader :it
-def [] it
+def [] it = nil
   message = { test: self, it: it }.merge in_isolation {
     message = { pid: Process.pid }
 

@@ -16,7 +16,7 @@ describe Test do
       true
     end
 
-    report = test[:anything]
+    report = test[]
 
     expect(report.ok?).to eq false
     expect(report.error).to be_a Timeout::Error
